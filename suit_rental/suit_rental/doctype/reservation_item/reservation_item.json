@@ -1,0 +1,110 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-08-23 21:48:33.209759",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "item_code",
+  "item_name",
+  "qty",
+  "uom",
+  "column_break_svpe",
+  "rate",
+  "image",
+  "check_availability",
+  "section_break_duvq",
+  "image_view"
+ ],
+ "fields": [
+  {
+   "fieldname": "item_code",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Item Code",
+   "link_filters": "[[\"Item\",\"custom_is_rental_item\",\"=\",1]]",
+   "options": "Item",
+   "reqd": 1,
+   "search_index": 1
+  },
+  {
+   "fetch_from": "item_code.item_name",
+   "fieldname": "item_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Item Name",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_svpe",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "item_code.custom_rental_price",
+   "fetch_if_empty": 1,
+   "fieldname": "rate",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Rate",
+   "non_negative": 1,
+   "precision": "2",
+   "reqd": 1
+  },
+  {
+   "fieldname": "check_availability",
+   "fieldtype": "Button",
+   "label": "Check Availability"
+  },
+  {
+   "default": "1",
+   "fieldname": "qty",
+   "fieldtype": "Int",
+   "hidden": 1,
+   "label": "qty"
+  },
+  {
+   "fetch_from": "item_code.stock_uom",
+   "fieldname": "uom",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "uom",
+   "options": "UOM",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "item_code.image",
+   "fieldname": "image",
+   "fieldtype": "Attach Image",
+   "hidden": 1,
+   "label": "Image",
+   "read_only": 1
+  },
+  {
+   "fieldname": "image_view",
+   "fieldtype": "Image",
+   "label": "Image View",
+   "options": "image",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_duvq",
+   "fieldtype": "Section Break"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2025-08-30 00:08:38.493630",
+ "modified_by": "Administrator",
+ "module": "Suit Rental",
+ "name": "Reservation Item",
+ "owner": "Administrator",
+ "permissions": [],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

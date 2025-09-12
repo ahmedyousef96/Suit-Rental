@@ -1,0 +1,403 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "naming_series:",
+ "creation": "2025-08-23 20:39:59.177343",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "transaction_details_section",
+  "reservation_date",
+  "sales_person",
+  "column_break_lkev",
+  "company",
+  "currency",
+  "column_break_tnez",
+  "branch",
+  "reservation_status",
+  "section_break_uphg",
+  "customer",
+  "column_break_nwan",
+  "customer_name",
+  "column_break_lmlu",
+  "mobile_number",
+  "section_break_vuku",
+  "event_date",
+  "column_break_knmf",
+  "reservation_from",
+  "column_break_karo",
+  "reservation_to",
+  "section_break_oq4n",
+  "source_warehouse",
+  "reservation_items",
+  "total_estimated_rent",
+  "section_break_dgrf",
+  "deposit_amount",
+  "mode_of_payment",
+  "paid_amount",
+  "column_break_aibi",
+  "outstanding_amount",
+  "tab_break_tgby",
+  "reservation_measurements",
+  "section_break_3jhp",
+  "amended_from",
+  "naming_series",
+  "payment_details_tab",
+  "reservation_payments",
+  "delivery_details_tab",
+  "actual_delivery_date",
+  "stock_entry_delivery",
+  "column_break_hskc",
+  "journal_entry",
+  "return_details_tab",
+  "actual_return_date",
+  "column_break_mmxk",
+  "stock_entry_return"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_3jhp",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Suit Reservation",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Customer",
+   "options": "Customer",
+   "reqd": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "branch",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Branch",
+   "options": "Branch",
+   "reqd": 1
+  },
+  {
+   "fieldname": "reservation_from",
+   "fieldtype": "Date",
+   "label": "Reservation From",
+   "reqd": 1
+  },
+  {
+   "fieldname": "reservation_to",
+   "fieldtype": "Date",
+   "label": "Reservation To",
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_break_oq4n",
+   "fieldtype": "Section Break",
+   "label": "Item Details"
+  },
+  {
+   "fieldname": "deposit_amount",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Deposit Amount",
+   "non_negative": 1,
+   "precision": "2"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "total_estimated_rent",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Total Amount",
+   "non_negative": 1,
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "tab_break_tgby",
+   "fieldtype": "Tab Break",
+   "label": "Customer Measurments"
+  },
+  {
+   "default": "SR-.YYYY.-.MM.-",
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "naming_series",
+   "options": "SR-.YYYY.-.MM.-",
+   "print_hide": 1,
+   "report_hide": 1
+  },
+  {
+   "fieldname": "column_break_nwan",
+   "fieldtype": "Column Break"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "reservation_items",
+   "fieldtype": "Table",
+   "label": "Reservation Items",
+   "options": "Reservation Item",
+   "read_only_depends_on": "eval:doc.reservation_status !== 'Reserved'",
+   "reqd": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "outstanding_amount",
+   "fieldtype": "Currency",
+   "label": "Outstanding Amount",
+   "non_negative": 1,
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "default": "Today",
+   "fieldname": "reservation_date",
+   "fieldtype": "Date",
+   "label": "Reservation Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_lkev",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "sales_person",
+   "fieldtype": "Link",
+   "label": "Sales Person",
+   "options": "User",
+   "read_only": 1,
+   "reqd": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "section_break_uphg",
+   "fieldtype": "Section Break",
+   "label": "Customer Details"
+  },
+  {
+   "allow_on_submit": 1,
+   "default": "Reserved",
+   "fieldname": "reservation_status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Reservation Status",
+   "options": "Reserved\nDelivered\nReturned\nCancelled",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fetch_from": "branch.custom_default_warehouse",
+   "fieldname": "source_warehouse",
+   "fieldtype": "Link",
+   "label": "Source Warehouse",
+   "options": "Warehouse",
+   "read_only": 1,
+   "reqd": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "event_date",
+   "fieldtype": "Date",
+   "label": "Event Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "reservation_measurements",
+   "fieldtype": "Table",
+   "label": "Reservation Measurements",
+   "options": "Reservation Measurement"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "actual_delivery_date",
+   "fieldtype": "Date",
+   "label": "Delivery Date",
+   "read_only": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "actual_return_date",
+   "fieldtype": "Date",
+   "label": "Return Date",
+   "read_only": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "stock_entry_delivery",
+   "fieldtype": "Link",
+   "label": "Stock Entry Delivery",
+   "options": "Stock Entry",
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "stock_entry_return",
+   "fieldtype": "Link",
+   "label": "Stock Entry Return",
+   "options": "Stock Entry",
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "paid_amount",
+   "fieldtype": "Currency",
+   "hidden": 1,
+   "label": "Paid Amount",
+   "read_only": 1
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fetch_from": "company.default_currency",
+   "fieldname": "currency",
+   "fieldtype": "Link",
+   "label": "Currency",
+   "options": "Currency",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_tnez",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "customer.customer_name",
+   "fieldname": "customer_name",
+   "fieldtype": "Read Only",
+   "label": "Customer Name"
+  },
+  {
+   "fieldname": "column_break_lmlu",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "customer.custom_phone_number",
+   "fieldname": "mobile_number",
+   "fieldtype": "Read Only",
+   "label": "Mobile Number"
+  },
+  {
+   "fieldname": "section_break_vuku",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_knmf",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_karo",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "transaction_details_section",
+   "fieldtype": "Section Break",
+   "label": "Transaction Details"
+  },
+  {
+   "fieldname": "section_break_dgrf",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_aibi",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "return_details_tab",
+   "fieldtype": "Tab Break",
+   "label": "Return Details"
+  },
+  {
+   "fieldname": "delivery_details_tab",
+   "fieldtype": "Tab Break",
+   "label": "Delivery Details"
+  },
+  {
+   "fieldname": "column_break_hskc",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_mmxk",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "payment_details_tab",
+   "fieldtype": "Tab Break",
+   "label": "Payment Details"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "reservation_payments",
+   "fieldtype": "Table",
+   "label": "Reservation Payments",
+   "options": "Reservation Payments",
+   "read_only": 1
+  },
+  {
+   "default": "Cash",
+   "fieldname": "mode_of_payment",
+   "fieldtype": "Link",
+   "label": "Mode of Payment",
+   "mandatory_depends_on": "eval:doc.deposit_amount > 0;",
+   "options": "Mode of Payment"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "journal_entry",
+   "fieldtype": "Link",
+   "label": "Journal Entry",
+   "options": "Journal Entry",
+   "read_only": 1
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2025-08-30 14:26:21.632539",
+ "modified_by": "Administrator",
+ "module": "Suit Rental",
+ "name": "Suit Reservation",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
