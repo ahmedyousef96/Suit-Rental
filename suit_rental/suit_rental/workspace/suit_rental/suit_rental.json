@@ -1,17 +1,8 @@
 {
  "charts": [],
- "content": "[{\"id\":\"LFdlNMAkP7\",\"type\":\"custom_block\",\"data\":{\"custom_block_name\":\"Suit Rental\",\"col\":12}},{\"id\":\"6R4CxpoTGG\",\"type\":\"custom_block\",\"data\":{\"custom_block_name\":\"Custom Button Block\",\"col\":12}},{\"id\":\"DPQJSjpeQB\",\"type\":\"card\",\"data\":{\"card_name\":\"Settings\",\"col\":4}},{\"id\":\"145oLZPN7A\",\"type\":\"card\",\"data\":{\"card_name\":\"Master Data\",\"col\":4}}]",
+ "content": "[{\"id\":\"IcZkshqSQQ\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"New Reservation\",\"col\":4}},{\"id\":\"HS8GUIbF_w\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"cbJfnPZ99b\",\"type\":\"card\",\"data\":{\"card_name\":\"Reservation\",\"col\":4}},{\"id\":\"145oLZPN7A\",\"type\":\"card\",\"data\":{\"card_name\":\"Master Data\",\"col\":4}},{\"id\":\"DPQJSjpeQB\",\"type\":\"card\",\"data\":{\"card_name\":\"Settings\",\"col\":4}}]",
  "creation": "2025-08-23 19:34:41.510755",
- "custom_blocks": [
-  {
-   "custom_block_name": "Suit Rental",
-   "label": "Suit Rental"
-  },
-  {
-   "custom_block_name": "Custom Button Block",
-   "label": "Custom Button Block"
-  }
- ],
+ "custom_blocks": [],
  "docstatus": 0,
  "doctype": "Workspace",
  "for_user": "",
@@ -89,9 +80,38 @@
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Reservation",
+   "link_count": 2,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Suit Reservation",
+   "link_count": 0,
+   "link_to": "Suit Reservation",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Customer",
+   "link_count": 0,
+   "link_to": "Customer",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
   }
  ],
- "modified": "2025-09-03 01:18:28.004916",
+ "modified": "2025-09-12 19:25:18.355080",
  "modified_by": "Administrator",
  "module": "Suit Rental",
  "name": "Suit Rental",
@@ -102,6 +122,16 @@
  "quick_lists": [],
  "roles": [],
  "sequence_id": 25.0,
- "shortcuts": [],
+ "shortcuts": [
+  {
+   "color": "Green",
+   "doc_view": "New",
+   "format": "{} Reserved Today",
+   "label": "New Reservation",
+   "link_to": "Suit Reservation",
+   "stats_filter": "[[\"Suit Reservation\",\"docstatus\",\"=\",\"1\",false],[\"Suit Reservation\",\"creation\",\"Timespan\",\"today\",false],[\"Suit Reservation\",\"reservation_status\",\"=\",\"Reserved\",false]]",
+   "type": "DocType"
+  }
+ ],
  "title": "Suit Rental"
 }

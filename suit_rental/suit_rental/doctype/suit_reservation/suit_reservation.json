@@ -74,7 +74,7 @@
    "fieldtype": "Link",
    "in_list_view": 1,
    "in_standard_filter": 1,
-   "label": "Customer",
+   "label": "Customer ID",
    "options": "Customer",
    "reqd": 1,
    "search_index": 1
@@ -86,7 +86,8 @@
    "in_standard_filter": 1,
    "label": "Branch",
    "options": "Branch",
-   "reqd": 1
+   "reqd": 1,
+   "search_index": 1
   },
   {
    "fieldname": "reservation_from",
@@ -174,6 +175,8 @@
   {
    "fieldname": "sales_person",
    "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Sales Person",
    "options": "User",
    "read_only": 1,
@@ -190,12 +193,13 @@
    "default": "Reserved",
    "fieldname": "reservation_status",
    "fieldtype": "Select",
-   "in_list_view": 1,
+   "in_filter": 1,
    "in_standard_filter": 1,
    "label": "Reservation Status",
    "options": "Reserved\nDelivered\nReturned\nCancelled",
    "read_only": 1,
-   "reqd": 1
+   "reqd": 1,
+   "search_index": 1
   },
   {
    "fetch_from": "branch.custom_default_warehouse",
@@ -284,6 +288,8 @@
    "fetch_from": "customer.customer_name",
    "fieldname": "customer_name",
    "fieldtype": "Read Only",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Customer Name"
   },
   {
@@ -373,7 +379,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-08-30 14:26:21.632539",
+ "modified": "2025-09-12 19:31:46.559848",
  "modified_by": "Administrator",
  "module": "Suit Rental",
  "name": "Suit Reservation",

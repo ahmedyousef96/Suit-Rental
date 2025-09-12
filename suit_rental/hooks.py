@@ -26,7 +26,7 @@ fixtures = [
     }
 ]
 
-
+after_sync = "suit_rental.install.after_sync"
 
 
 
