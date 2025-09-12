@@ -5,9 +5,36 @@ app_description = "Suit/Dress Rental App"
 app_email = "ay716881@gmail.com"
 app_license = "mit"
 
+
+
+fixtures = [
+    {
+        "doctype": "Custom Field",
+        "filters": [["module", "=", "Suit Rental"]]
+    },
+    {
+        "doctype": "Client Script",
+        "filters": [["module", "=", "Suit Rental"]]
+    },
+    {
+        "doctype": "Server Script",
+        "filters": [["module", "=", "Suit Rental"]]
+    },
+    {
+        "doctype": "Report",
+        "filters": [["module", "=", "Suit Rental"]]
+    }
+]
+
+
+
+
+
+
+
+
 # Apps
 # ------------------
-
 # required_apps = []
 
 # Each item in the list will be shown as an app in the apps page
