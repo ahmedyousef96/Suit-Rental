@@ -39,3 +39,23 @@ This app can use GitHub Actions for CI. The following workflows are configured:
 ### License
 
 mit
+
+-----
+Documentation:
+
+Suit Rental
+Suit/Dress Rental App
+The Suit Rental app streamlines suit and dress rental businesses with a complete workflow from booking to return, across multiple branches.
+
+Key Features:
+Reservations – Manage customer bookings with availability checks to prevent overlaps.
+Deliveries – Generate Sales Invoices and Stock Entries when items are handed over.
+Returns – Record item returns and auto-reverse stock entries.
+Multi-Branch Support – Track stock, invoices, and rentals per branch.
+Customer Measurements – Store and reuse customer measurements for faster reservations.
+Statistical Dashboard – Live snapshot of pending deliveries, pending returns, and active reservations with clickable detailed reports.
+
+Compatibility:
+ERPNext & Frappe version 15
+
+This app is ideal for boutiques, rental stores, and fashion academies managing clothing inventory across multiple outlets.
