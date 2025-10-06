@@ -1,6 +1,11 @@
 {
- "charts": [],
- "content": "[{\"id\":\"IcZkshqSQQ\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"New Reservation\",\"col\":4}},{\"id\":\"HS8GUIbF_w\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"cbJfnPZ99b\",\"type\":\"card\",\"data\":{\"card_name\":\"Reservation\",\"col\":4}},{\"id\":\"145oLZPN7A\",\"type\":\"card\",\"data\":{\"card_name\":\"Master Data\",\"col\":4}},{\"id\":\"DPQJSjpeQB\",\"type\":\"card\",\"data\":{\"card_name\":\"Settings\",\"col\":4}}]",
+ "charts": [
+  {
+   "chart_name": "Suit Reservation Totals",
+   "label": "Suit Reservation Chart"
+  }
+ ],
+ "content": "[{\"id\":\"dyZyNasC2n\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Suit Reservation Chart\",\"col\":12}},{\"id\":\"NYXAno7nRT\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>ShortCuts</b></span>\",\"col\":12}},{\"id\":\"IcZkshqSQQ\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"New Reservation\",\"col\":4}},{\"id\":\"3DWg8-aYEW\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"New Item\",\"col\":4}},{\"id\":\"rlR-pNvzEy\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"New Customer\",\"col\":4}},{\"id\":\"QySIqwlCA_\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Reservation Totals Report\",\"col\":4}},{\"id\":\"d4LwBoAsQR\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Reservation Statistics Report\",\"col\":4}},{\"id\":\"SwBbXA_xn2\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Active Reservations Report\",\"col\":4}},{\"id\":\"HS8GUIbF_w\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"TT6sH6L8mx\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Menus</b></span>\",\"col\":12}},{\"id\":\"cbJfnPZ99b\",\"type\":\"card\",\"data\":{\"card_name\":\"Reservation\",\"col\":4}},{\"id\":\"sM4Vx7I7EE\",\"type\":\"card\",\"data\":{\"card_name\":\"Reservation Reports\",\"col\":4}},{\"id\":\"KNBBz47ALd\",\"type\":\"card\",\"data\":{\"card_name\":\"Suppliers\",\"col\":4}},{\"id\":\"145oLZPN7A\",\"type\":\"card\",\"data\":{\"card_name\":\"Master Data\",\"col\":4}},{\"id\":\"ok4IK7DLxj\",\"type\":\"card\",\"data\":{\"card_name\":\"Stock\",\"col\":4}},{\"id\":\"DPQJSjpeQB\",\"type\":\"card\",\"data\":{\"card_name\":\"Settings\",\"col\":4}}]",
  "creation": "2025-08-23 19:34:41.510755",
  "custom_blocks": [],
  "docstatus": 0,
@@ -16,8 +21,57 @@
   {
    "hidden": 0,
    "is_query_report": 0,
+   "label": "Stock",
+   "link_count": 4,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Stock Entry",
+   "link_count": 0,
+   "link_to": "Stock Entry",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Stock Balance",
+   "link_count": 0,
+   "link_to": "Stock Balance",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Total Stock Summary",
+   "link_count": 0,
+   "link_to": "Total Stock Summary",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Stock Ledger",
+   "link_count": 0,
+   "link_to": "Stock Ledger",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
    "label": "Settings",
-   "link_count": 2,
+   "link_count": 4,
    "link_type": "DocType",
    "onboard": 0,
    "type": "Card Break"
@@ -45,8 +99,175 @@
   {
    "hidden": 0,
    "is_query_report": 0,
+   "label": "Measurement Type",
+   "link_count": 0,
+   "link_to": "Measurement Type",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Mode of Payment",
+   "link_count": 0,
+   "link_to": "Mode of Payment",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Reservation",
+   "link_count": 4,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Suit Reservation",
+   "link_count": 0,
+   "link_to": "Suit Reservation",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Customer",
+   "link_count": 0,
+   "link_to": "Customer",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Customer Measurement",
+   "link_count": 0,
+   "link_to": "Customer Measurement",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Active Reservations Report",
+   "link_count": 0,
+   "link_to": "Active Reservations",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Reservation Reports",
+   "link_count": 4,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Totals from Suit Reservation",
+   "link_count": 0,
+   "link_to": "Totals from Suit Reservation",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Suit Reservation Statistics",
+   "link_count": 0,
+   "link_to": "Suit Reservation Statistics",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Deliveries Pending",
+   "link_count": 0,
+   "link_to": "Deliveries Pending",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Returns Pending",
+   "link_count": 0,
+   "link_to": "Returns Pending",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Suppliers",
+   "link_count": 4,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Supplier",
+   "link_count": 0,
+   "link_to": "Supplier",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Purchase Invoice",
+   "link_count": 0,
+   "link_to": "Purchase Invoice",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Purchase Receipt",
+   "link_count": 0,
+   "link_to": "Purchase Receipt",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Payment Entry",
+   "link_count": 0,
+   "link_to": "Payment Entry",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
    "label": "Master Data",
-   "link_count": 3,
+   "link_count": 4,
    "link_type": "DocType",
    "onboard": 0,
    "type": "Card Break"
@@ -74,44 +295,25 @@
   {
    "hidden": 0,
    "is_query_report": 0,
+   "label": "Brand",
+   "link_count": 0,
+   "link_to": "Brand",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
    "label": "Item Price",
    "link_count": 0,
    "link_to": "Item Price",
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Reservation",
-   "link_count": 2,
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Card Break"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Suit Reservation",
-   "link_count": 0,
-   "link_to": "Suit Reservation",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Customer",
-   "link_count": 0,
-   "link_to": "Customer",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
   }
  ],
- "modified": "2025-09-12 19:25:18.355080",
+ "modified": "2025-09-13 19:08:03.344361",
  "modified_by": "Administrator",
  "module": "Suit Rental",
  "name": "Suit Rental",
@@ -124,12 +326,54 @@
  "sequence_id": 25.0,
  "shortcuts": [
   {
-   "color": "Green",
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Reservation Totals Report",
+   "link_to": "Totals from Suit Reservation",
+   "report_ref_doctype": "Suit Reservation",
+   "type": "Report"
+  },
+  {
+   "color": "Pink",
    "doc_view": "New",
-   "format": "{} Reserved Today",
+   "format": "{} Today",
    "label": "New Reservation",
    "link_to": "Suit Reservation",
-   "stats_filter": "[[\"Suit Reservation\",\"docstatus\",\"=\",\"1\",false],[\"Suit Reservation\",\"creation\",\"Timespan\",\"today\",false],[\"Suit Reservation\",\"reservation_status\",\"=\",\"Reserved\",false]]",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Green",
+   "doc_view": "New",
+   "format": "{} Rental Item",
+   "label": "New Item",
+   "link_to": "Item",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Reservation Statistics Report",
+   "link_to": "Suit Reservation Statistics",
+   "report_ref_doctype": "Suit Reservation",
+   "type": "Report"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Active Reservations Report",
+   "link_to": "Active Reservations",
+   "report_ref_doctype": "Suit Reservation",
+   "type": "Report"
+  },
+  {
+   "color": "Blue",
+   "doc_view": "New",
+   "format": "{} Active",
+   "label": "New Customer",
+   "link_to": "Customer",
+   "stats_filter": "[]",
    "type": "DocType"
   }
  ],

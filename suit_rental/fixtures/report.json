@@ -1,1 +1,222 @@
-[]
+[
+ {
+  "add_total_row": 1,
+  "add_translate_data": 0,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "Yes",
+  "javascript": null,
+  "json": null,
+  "letter_head": null,
+  "modified": "2025-09-13 16:08:46.386554",
+  "module": "Suit Rental",
+  "name": "Totals from Suit Reservation",
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "Suit Reservation",
+  "reference_report": null,
+  "report_name": "Totals from Suit Reservation",
+  "report_script": null,
+  "report_type": "Script Report",
+  "roles": [
+   {
+    "parent": "Totals from Suit Reservation",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "System Manager"
+   },
+   {
+    "parent": "Totals from Suit Reservation",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Suit Rental Manager"
+   },
+   {
+    "parent": "Totals from Suit Reservation",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Suit Rental User"
+   }
+  ],
+  "timeout": 0
+ },
+ {
+  "add_total_row": 1,
+  "add_translate_data": 0,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "Yes",
+  "javascript": null,
+  "json": null,
+  "letter_head": null,
+  "modified": "2025-09-13 16:52:55.854998",
+  "module": "Suit Rental",
+  "name": "Suit Reservation Statistics",
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "Suit Reservation",
+  "reference_report": null,
+  "report_name": "Suit Reservation Statistics",
+  "report_script": null,
+  "report_type": "Script Report",
+  "roles": [
+   {
+    "parent": "Suit Reservation Statistics",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "System Manager"
+   },
+   {
+    "parent": "Suit Reservation Statistics",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Suit Rental Manager"
+   },
+   {
+    "parent": "Suit Reservation Statistics",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Suit Rental User"
+   }
+  ],
+  "timeout": 0
+ },
+ {
+  "add_total_row": 1,
+  "add_translate_data": 0,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "Yes",
+  "javascript": null,
+  "json": null,
+  "letter_head": null,
+  "modified": "2025-09-13 17:43:33.034021",
+  "module": "Suit Rental",
+  "name": "Deliveries Pending",
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "Suit Reservation",
+  "reference_report": null,
+  "report_name": "Deliveries Pending",
+  "report_script": null,
+  "report_type": "Script Report",
+  "roles": [
+   {
+    "parent": "Deliveries Pending",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "System Manager"
+   },
+   {
+    "parent": "Deliveries Pending",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Suit Rental Manager"
+   },
+   {
+    "parent": "Deliveries Pending",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Suit Rental User"
+   }
+  ],
+  "timeout": 0
+ },
+ {
+  "add_total_row": 1,
+  "add_translate_data": 0,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "Yes",
+  "javascript": null,
+  "json": null,
+  "letter_head": null,
+  "modified": "2025-09-13 17:47:04.504390",
+  "module": "Suit Rental",
+  "name": "Returns Pending",
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "Suit Reservation",
+  "reference_report": null,
+  "report_name": "Returns Pending",
+  "report_script": null,
+  "report_type": "Script Report",
+  "roles": [
+   {
+    "parent": "Returns Pending",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "System Manager"
+   },
+   {
+    "parent": "Returns Pending",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Suit Rental Manager"
+   },
+   {
+    "parent": "Returns Pending",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Suit Rental User"
+   }
+  ],
+  "timeout": 0
+ },
+ {
+  "add_total_row": 1,
+  "add_translate_data": 0,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "Yes",
+  "javascript": null,
+  "json": null,
+  "letter_head": null,
+  "modified": "2025-09-13 17:48:59.474805",
+  "module": "Suit Rental",
+  "name": "Active Reservations",
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "Suit Reservation",
+  "reference_report": null,
+  "report_name": "Active Reservations",
+  "report_script": null,
+  "report_type": "Script Report",
+  "roles": [
+   {
+    "parent": "Active Reservations",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "System Manager"
+   },
+   {
+    "parent": "Active Reservations",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Suit Rental Manager"
+   },
+   {
+    "parent": "Active Reservations",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Suit Rental User"
+   }
+  ],
+  "timeout": 0
+ }
+]

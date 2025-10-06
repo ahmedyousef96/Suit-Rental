@@ -18,7 +18,6 @@
    "label": "Customer",
    "options": "Customer",
    "reqd": 1,
-   "search_index": 1,
    "unique": 1
   },
   {
@@ -35,7 +34,7 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-08-23 19:54:22.537958",
+ "modified": "2025-09-13 13:52:43.333705",
  "modified_by": "Administrator",
  "module": "Suit Rental",
  "name": "Customer Measurement",
@@ -51,6 +50,30 @@
    "read": 1,
    "report": 1,
    "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Suit Rental User",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Suit Rental Manager",
    "share": 1,
    "write": 1
   }

@@ -23,6 +23,10 @@ fixtures = [
     {
         "doctype": "Report",
         "filters": [["module", "=", "Suit Rental"]]
+    },
+    {
+        "doctype": "Custom DocPerm",
+        "filters": [["role", "in", ["Suit Rental Manager", "Suit Rental User"]]]
     }
 ]
 

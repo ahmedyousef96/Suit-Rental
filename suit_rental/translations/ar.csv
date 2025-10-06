@@ -1,0 +1,120 @@
+is already added. Please select a different item.,تمت إضافته بالفعل. يُرجى اختيار صنف آخر.
+Click here to add measurements.,انقر هنا لإضافة القياسات.
+Bank Account not defined in Branch,حساب بنكي غير محدد في الفرع
+Branch is required for delivery,حقل الفرع مطلوب للتسليم
+Branch is required for deposit payment,يجب أن يكون الفرع مطلوبًا لدفع المقدم
+Cancellation Successful,تم الإلغاء بنجاح
+Cash Account,حساب نقدي
+Checking availability...,التحقق من التوفر...
+Company is required for delivery,حقل الشركة مطلوب للتسليم
+Company is required for deposit payment,حقل الشركة مطلوب لدفع الوديعة
+Company is required for return,حقل الشركة مطلوب للإرتجاع
+Currency is required for delivery,حقل العملة مطلوب للتسليم
+Currency is required for deposit payment,حقل العملة مطلوب لدفع الوديعة
+Currency is required for return,حقل العملة مطلوب للإرجاع
+Customer Measurement,مقاسات العملاء
+Customer Measurments,قياسات العملاء
+Customer is required for deposit payment,حقل  العميل مطلوب لدفع الوديعة
+Deliver,تسليم
+Deliver Reservation,تسليم الحجز
+Delivery Date is required,تاريخ التسليم مطلوب
+Delivery Successful,تم التسليم بنجاح
+Deposit Amount,مبلغ الإيداع
+Deposit Amount cannot be greater than Total Estimated Rent.,لا يمكن أن يكون مبلغ الإيداع أكبر من إجمالي الإيجار المقدر.
+Duplicate Item,عنصر مكرر
+Event Date,تاريخ الحدث
+Event date should be in the future,يجب أن يكون تاريخ الحدث في المستقبل
+Failed to check availability:,فشل التحقق من التوفر:
+Fetching measurements...,جاري جلب القياسات...
+Frappe School,مدرسة فرابيه
+Get Customer Measurement,احصل على مقاسات العميل
+Income Account not defined in Branch,حساب الدخل غير محدد في الفرع
+Invalid Deposit,إيداع غير صالح
+Item Code,كود الصنف
+Item Code is missing in row {0},كود الصنف مفقود في الصف {0}
+Item Code is required,كود الصنف مطلوب
+Last 10 reservations,آخر 10 حجوزات
+Manager Name,اسم المدير
+Measurement Name,اسم القياس
+Measurement Type,نوع القياس
+Measurements,القياسات
+Measurements Fetched,القياسات التي تم جلبها
+Measurements fetched successfully,تم جلب القياسات بنجاح
+Measurements for customer {0} fetched successfully.,تم جلب القياسات للعميل {0} بنجاح.
+Missing Data,البيانات المفقودة
+Mode of Payment is required for delivery,طريقة الدفع مطلوبة للتسليم
+Mode of Payment is required for deposit payment,طريقة الدفع مطلوبة لدفع الوديعة
+No Customer Measurement found for this customer,لم يتم العثور على قياسات سابقة لهذا العميل
+No recent reservations found.,لم يتم العثور على أي حجوزات حديثة.
+No response from availability API,لا يوجد رد من واجهة برمجة التطبيقات المتاحة
+Please select a Customer first,الرجاء اختيار العميل أولاً
+Quantity must be greater than 0 in row {0},يجب أن تكون الكمية أكبر من 0 في الصف {0}
+Receivable Account not defined in Branch,حساب العملاء غير محدد في الفرع
+Report an Issue,الإبلاغ عن مشكلة
+Reservation Date,تاريخ الحجز
+Reservation From,محجوز من
+Reservation Item,الاصناف المحجوزة
+Reservation Items,أصناف الحجز
+Reservation Items are required for delivery,الأصناف المحجوزة مطلوبة للتسليم
+Reservation Items are required for return,يجب إرجاع الأصناف المحجوزة
+Reservation Measurement,قياسات الحجز
+Reservation Measurements,قياسات الحجز
+Reservation Payments,مدفوعات الحجز
+Reservation Status,حالة الحجز
+Reservation To,محجوز إلى
+Reservation To date cannot be before Reservation From date,لا يمكن أن يكون تاريخ الحجز حتى تاريخ الحجز من
+Reservation delivered successfully,تم تسليم الحجز بنجاح
+Reservation must be Submitted to deliver,يجب تأكيد الحجز للتسليم
+Reservation must be Submitted to return,يجب تأكيد الحجز للعودة
+Reservation must be in 'Delivered' status to return,"يجب أن يكون الحجز في حالة ""تم التسليم"" حتى تتمكن من الإرجاع"
+Reservation must be in 'Reserved' status to deliver,"يجب أن يكون الحجز في حالة ""محجوز"" للتسليم"
+Reservation returned successfully,تم إرجاع الحجز بنجاح
+Reservation {0} has been successfully cancelled.,تم إلغاء الحجز {0} بنجاح.
+Reservation {0} has been successfully delivered on {1}.,تم تسليم الحجز {0} بنجاح في {1}.
+Reservation {0} has been successfully returned on {1}.,تم إرجاع الحجز {0} بنجاح في {1}.
+Reservation {0} has been successfully submitted with status '{1}'.,تم تقديم الحجز {0} بنجاح مع الحالة '{1}'.
+Return Date,تاريخ العودة
+Return Date is required,تاريخ العودة مطلوب
+Return Details,تفاصيل الإرجاع
+Return Reservation,حجز العودة
+Return Successful,عودة ناجحة
+Select an item first,حدد العنصر أولاً
+Source Warehouse is required for delivery,يجب أن يكون مستودع المصدر مطلوبًا للتسليم
+Source Warehouse is required for return,يجب أن يكون مستودع المصدر مطلوبًا للإرجاع
+Start Date and End Date are required,تاريخ البدء وتاريخ الانتهاء مطلوبان
+Stock Entry Delivery,تسليم إدخالات الأسهم
+Stock Entry Return,عائد دخول الأسهم
+Submission Successful,تم الإرسال بنجاح
+Suit Rental Manager,مدير تأجير البدلات
+Suit Rental User,مستخدم تأجير البدلات
+Suit Reservation,حجز البدلة
+Suit Reservation Default,حجز البدلة افتراضيًا
+Total stock in Sales Warehouse,إجمالي المخزون في مستودع المبيعات
+Unknown error,خطأ غير معروف
+Uom,وحدة القياس
+User Forum,منتدى المستخدمين
+Warehouse is required,المستودع مطلوب
+qty,الكمية
+uom,وحدة
+Suit Rental,تأجير البدلات
+ShortCuts,الإختصارات
+New Reservation,اضافة حجز جديد
+New Item,اضافة صنف جديد
+New Customer,اضافة عميل جديد
+Menus,القوائم
+Reservation,الحجز
+Reservation Statistics Report,تقرير احصائيات الحجوزات
+Active Reservations Report,تقرير تفاصيل الحجز
+Reservation Totals Report,تقرير اجماليات الحجز
+Total Sales,إجمالي المبيعات
+Count of Transactions,عدد الحركات
+Branch,الفرع
+Deliveries Pending,تسليمات معلقة
+Returns Pending,متأخرات العملاء
+Active Reservations,الحجوزات النشطة
+Customer Mobile,موبايل العميل
+Total Value,المبلغ الاجمالي
+Reservation Reports,تقارير الحجوزات
+Totals from Suit Reservation,أجماليات حجوزات البدل
+Suit Reservation Statistics,احصائيات حجوزات البدل
+Suit Reservation Chart,مخطط الحجوزات

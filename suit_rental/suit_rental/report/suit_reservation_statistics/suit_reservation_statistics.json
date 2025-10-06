@@ -1,0 +1,34 @@
+{
+ "add_total_row": 1,
+ "add_translate_data": 0,
+ "columns": [],
+ "creation": "2025-09-13 16:52:55.854998",
+ "disabled": 0,
+ "docstatus": 0,
+ "doctype": "Report",
+ "filters": [],
+ "idx": 0,
+ "is_standard": "Yes",
+ "letterhead": null,
+ "modified": "2025-09-13 16:52:55.854998",
+ "modified_by": "Administrator",
+ "module": "Suit Rental",
+ "name": "Suit Reservation Statistics",
+ "owner": "Administrator",
+ "prepared_report": 0,
+ "ref_doctype": "Suit Reservation",
+ "report_name": "Suit Reservation Statistics",
+ "report_type": "Script Report",
+ "roles": [
+  {
+   "role": "System Manager"
+  },
+  {
+   "role": "Suit Rental Manager"
+  },
+  {
+   "role": "Suit Rental User"
+  }
+ ],
+ "timeout": 0
+}
