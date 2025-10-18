@@ -173,7 +173,6 @@ frappe.ui.form.on("Suit Reservation", {
 	},
 });
 
-// Child table events
 frappe.ui.form.on("Reservation Item", {
 	item_code(frm, cdt, cdn) {
 		const row = locals[cdt][cdn];
@@ -185,10 +184,10 @@ frappe.ui.form.on("Reservation Item", {
 			if (duplicate) {
 				frappe.msgprint({
 					title: __("Duplicate Item"),
-					message:
-						__("Item Code ") +
-						row.item_code +
-						__(" is already added. Please select a different item."),
+					message: __(
+						"Item Code {0} is already added. Please select a different item.",
+						[row.item_code]
+					),
 					indicator: "red",
 				});
 				frappe.model.set_value(cdt, cdn, "item_code", "");
