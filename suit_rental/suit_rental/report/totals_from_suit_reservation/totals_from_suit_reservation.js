@@ -72,20 +72,13 @@ function validate_dates(query_report) {
 
 function set_date_range(option) {
     let today = frappe.datetime.get_today();
-
     if (option === "month") {
         let month_start = frappe.datetime.month_start(today);
         frappe.query_report.set_filter_value("from_date", month_start);
         frappe.query_report.set_filter_value("to_date", today);
-    }
-    else if (option === "week") {
+    } else if (option === "week") {
         let week_start = frappe.datetime.add_days(today, -frappe.datetime.week_start(today));
         frappe.query_report.set_filter_value("from_date", week_start);
-        frappe.query_report.set_filter_value("to_date", today);
-    }
-    else if (option === "month") {
-        let month_start = frappe.datetime.month_start(today);
-        frappe.query_report.set_filter_value("from_date", month_start);
         frappe.query_report.set_filter_value("to_date", today);
     }
 }
