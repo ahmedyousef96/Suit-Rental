@@ -66,6 +66,6 @@ def get_chart(data):
                 }
             ]
         },
-        "type": "pie",   # ? Pie Chart »ѕб«р гд Bar
+        "type": "pie",  
         "colors": ["#5E64FF", "#FFB822", "#36B37E", "#F66D44", "#A3A0FB"]
     }

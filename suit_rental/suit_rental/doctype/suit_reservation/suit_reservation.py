@@ -118,3 +118,4 @@ class SuitReservation(Document):
         Hook to handle cancellation of related records after Suit Reservation is canceled.
         """
         self.cancel_related_records()
+        
