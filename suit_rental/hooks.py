@@ -6,35 +6,15 @@ app_email = "ay716881@gmail.com"
 app_license = "mit"
 
 
-
 fixtures = [
-    {
-        "doctype": "Custom Field",
-        "filters": [["module", "=", "Suit Rental"]]
-    },
-    {
-        "doctype": "Client Script",
-        "filters": [["module", "=", "Suit Rental"]]
-    },
-    {
-        "doctype": "Server Script",
-        "filters": [["module", "=", "Suit Rental"]]
-    },
-    {
-        "doctype": "Report",
-        "filters": [["module", "=", "Suit Rental"]]
-    },
-    {
-        "doctype": "Custom DocPerm",
-        "filters": [["role", "in", ["Suit Rental Manager", "Suit Rental User"]]]
-    }
+	{"doctype": "Custom Field", "filters": [["module", "=", "Suit Rental"]]},
+	{"doctype": "Client Script", "filters": [["module", "=", "Suit Rental"]]},
+	{"doctype": "Server Script", "filters": [["module", "=", "Suit Rental"]]},
+	{"doctype": "Report", "filters": [["module", "=", "Suit Rental"]]},
+	{"doctype": "Custom DocPerm", "filters": [["role", "in", ["Suit Rental Manager", "Suit Rental User"]]]},
 ]
 
 after_sync = "suit_rental.install.after_sync"
-
-
-
-
 
 
 # Apps
@@ -272,4 +252,3 @@ after_sync = "suit_rental.install.after_sync"
 # default_log_clearing_doctypes = {
 # 	"Logging DocType Name": 30  # days to retain logs
 # }
-
