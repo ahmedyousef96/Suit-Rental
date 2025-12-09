@@ -8,13 +8,13 @@
  "field_order": [
   "transaction_details_section",
   "reservation_date",
-  "sales_person",
+  "reservation_status",
   "column_break_lkev",
+  "branch",
+  "sales_person",
+  "column_break_tnez",
   "company",
   "currency",
-  "column_break_tnez",
-  "branch",
-  "reservation_status",
   "section_break_uphg",
   "customer",
   "column_break_nwan",
@@ -29,12 +29,19 @@
   "reservation_to",
   "section_break_oq4n",
   "source_warehouse",
+  "column_break_gxdh",
+  "customer_stock_warehouse",
+  "section_break_lnhh",
   "reservation_items",
+  "section_break_xusu",
+  "security_amount",
+  "force_collect_security_amount",
+  "column_break_empp",
   "total_estimated_rent",
+  "paid_amount",
   "section_break_dgrf",
   "deposit_amount",
   "mode_of_payment",
-  "paid_amount",
   "column_break_aibi",
   "outstanding_amount",
   "tab_break_tgby",
@@ -49,6 +56,12 @@
   "stock_entry_delivery",
   "column_break_hskc",
   "journal_entry",
+  "section_break_hncg",
+  "reservation_sales_invoice",
+  "journal_entries_section",
+  "reservation_journal_entry",
+  "stock_entries_section",
+  "reservation_stock_entries",
   "return_details_tab",
   "actual_return_date",
   "column_break_mmxk",
@@ -119,7 +132,7 @@
    "fieldname": "total_estimated_rent",
    "fieldtype": "Currency",
    "in_list_view": 1,
-   "label": "Total Amount",
+   "label": "Total Rent Amount",
    "non_negative": 1,
    "precision": "2",
    "read_only": 1
@@ -205,7 +218,7 @@
    "fetch_from": "branch.custom_default_warehouse",
    "fieldname": "source_warehouse",
    "fieldtype": "Link",
-   "label": "Source Warehouse",
+   "label": "Branch Warehouse",
    "options": "Warehouse",
    "read_only": 1,
    "reqd": 1,
@@ -259,11 +272,12 @@
    "allow_on_submit": 1,
    "fieldname": "paid_amount",
    "fieldtype": "Currency",
-   "hidden": 1,
-   "label": "Paid Amount",
+   "label": "Total Rent Paid Amount",
+   "precision": "2",
    "read_only": 1
   },
   {
+   "fetch_from": "branch.custom_company",
    "fieldname": "company",
    "fieldtype": "Link",
    "label": "Company",
@@ -297,7 +311,7 @@
    "fieldtype": "Column Break"
   },
   {
-   "fetch_from": "customer.custom_phone_number",
+   "fetch_from": "customer.mobile_no",
    "fieldname": "mobile_number",
    "fieldtype": "Read Only",
    "label": "Mobile Number"
@@ -373,13 +387,97 @@
    "label": "Journal Entry",
    "options": "Journal Entry",
    "read_only": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "security_amount",
+   "fieldtype": "Currency",
+   "label": "Security Amount",
+   "mandatory_depends_on": "force_collect_security_amount",
+   "non_negative": 1,
+   "precision": "2",
+   "read_only_depends_on": "eval:doc.reservation_status !=='Reserved'"
+  },
+  {
+   "allow_on_submit": 1,
+   "default": "0",
+   "description": "You must check the field if you need to collect security amount from the customer.",
+   "fieldname": "force_collect_security_amount",
+   "fieldtype": "Check",
+   "label": "Force Collect Security Amount",
+   "read_only_depends_on": "eval:doc.reservation_status !=='Reserved'"
+  },
+  {
+   "fieldname": "section_break_xusu",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_empp",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_hncg",
+   "fieldtype": "Section Break",
+   "label": "Sales Invoices"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "reservation_sales_invoice",
+   "fieldtype": "Table",
+   "label": "Reservation Sales Invoice",
+   "options": "Reservation Sales Invoice",
+   "read_only": 1
+  },
+  {
+   "fieldname": "journal_entries_section",
+   "fieldtype": "Section Break",
+   "label": "Journal Entries"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "reservation_journal_entry",
+   "fieldtype": "Table",
+   "label": "Reservation Journal Entry",
+   "options": "Reservation Journal Entry",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "branch.custom_customer_stock_warehouse",
+   "fieldname": "customer_stock_warehouse",
+   "fieldtype": "Link",
+   "label": "Customer Warehouse",
+   "options": "Warehouse",
+   "read_only": 1,
+   "reqd": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "column_break_gxdh",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_lnhh",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "stock_entries_section",
+   "fieldtype": "Section Break",
+   "label": "Stock Entries"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "reservation_stock_entries",
+   "fieldtype": "Table",
+   "label": "Reservation Stock Entry",
+   "options": "Reservation Stock Entry",
+   "read_only": 1
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-09-13 18:52:39.353980",
+ "modified": "2025-12-09 23:55:39.799790",
  "modified_by": "Administrator",
  "module": "Suit Rental",
  "name": "Suit Reservation",

@@ -331,3 +331,112 @@ const debounced_update_total_estimated = frappe.utils.debounce((frm) => {
 function update_total_estimated(frm) {
 	debounced_update_total_estimated(frm);
 }
+
+// Filter Child Table Fields (Serial No)
+frappe.ui.form.on("Suit Reservation", {
+	refresh: function (frm) {
+		if (!frm.fields_dict["reservation_items"]?.grid) return;
+
+		frm.fields_dict["reservation_items"].grid.get_field("serial_no").get_query = function (
+			doc,
+			cdt,
+			cdn
+		) {
+			const row = locals[cdt][cdn];
+
+			// Stop if item_code is missing
+			if (!row.item_code) {
+				frappe.msgprint(__("Please select the Item first."));
+				return false;
+			}
+
+			// Stop if warehouse is missing
+			if (!doc.source_warehouse) {
+				frappe.msgprint(__("Please select the Source Warehouse first."));
+				return false;
+			}
+
+			// Already selected serial numbers
+			let serials_list = (doc.reservation_items || [])
+				.filter((d) => d.serial_no)
+				.map((d) => d.serial_no);
+
+			// Filters
+			let filters = {
+				status: "Active",
+				item_code: row.item_code,
+				warehouse: doc.source_warehouse,
+			};
+
+			if (serials_list.length > 0) {
+				filters["name"] = ["not in", serials_list];
+			}
+
+			return { filters };
+		};
+	},
+});
+
+// Filter Child Table Fields (Batch No)
+frappe.ui.form.on("Suit Reservation", {
+	refresh: function (frm) {
+		if (!frm.fields_dict["reservation_items"]?.grid) return;
+
+		frm.fields_dict["reservation_items"].grid.get_field("batch_no").get_query = function (
+			doc,
+			cdt,
+			cdn
+		) {
+			const row = locals[cdt][cdn];
+
+			// Stop if item_code is missing
+			if (!row.item_code) {
+				frappe.msgprint(__("Please select the Item first."));
+				return false;
+			}
+
+			// Stop if warehouse is missing
+			if (!doc.source_warehouse) {
+				frappe.msgprint(__("Please select the Source Warehouse first."));
+				return false;
+			}
+
+			// Already selected batch numbers
+			let batch_list = (doc.reservation_items || [])
+				.filter((d) => d.batch_no)
+				.map((d) => d.batch_no);
+
+			return {
+				query: "erpnext.controllers.queries.get_batch_no",
+				filters: {
+					item_code: row.item_code,
+					warehouse: doc.source_warehouse,
+					disabled: 0,
+					name: ["not in", batch_list],
+				},
+			};
+		};
+	},
+});
+
+//
+frappe.ui.form.on("Reservation Item", {
+	serial_no(frm, cdt, cdn) {
+		let row = locals[cdt][cdn];
+
+		// If user clears serial ? clear batch also
+		if (!row.serial_no) {
+			frappe.model.set_value(cdt, cdn, "batch_no", "");
+			return;
+		}
+
+		// Auto-set batch only when BOTH are required
+		if (row.has_serial_no == 1 && row.has_batch_no == 1) {
+			frappe.db.get_value("Serial No", row.serial_no, ["batch_no"], function (r) {
+				if (r && r.batch_no) {
+					frappe.model.set_value(cdt, cdn, "batch_no", r.batch_no);
+				}
+			});
+		}
+	},
+});

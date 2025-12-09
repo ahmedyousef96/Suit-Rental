@@ -111,147 +111,360 @@ def check_availability(item_code, branch=None, warehouse=None, start_date=None, 
 	}
 
 
+# Deliver Items
 @frappe.whitelist()
 def deliver_reservation(name, delivery_date, mode_of_payment):
-	"""
-	Deliver the reservation: Update status to 'Delivered', create Material Issue Stock Entry,
-	create Payment Entry for remaining amount, create Journal Entry using Branch accounts,
-	and store Payment Entry in reservation_payments.
-	"""
 	doc = frappe.get_doc("Suit Reservation", name)
+
+	# -----------------------------
+	# Basic Validations
+	# -----------------------------
 	if doc.docstatus != 1:
 		frappe.throw(_("Reservation must be Submitted to deliver"))
+
 	if doc.reservation_status != "Reserved":
 		frappe.throw(_("Reservation must be in 'Reserved' status to deliver"))
+
 	if not doc.source_warehouse:
 		frappe.throw(_("Source Warehouse is required for delivery"))
-	if not doc.reservation_items or len(doc.reservation_items) == 0:
+
+	if not doc.reservation_items:
 		frappe.throw(_("Reservation Items are required for delivery"))
-	if not doc.branch:
-		frappe.throw(_("Branch is required for delivery"))
-	if not doc.currency:
-		frappe.throw(_("Currency is required for delivery"))
+
 	if not doc.company:
 		frappe.throw(_("Company is required for delivery"))
+
+	if not doc.currency:
+		frappe.throw(_("Currency is required for delivery"))
+
 	if not delivery_date:
-		frappe.throw(_("Delivery Date is required"))
+		frappe.throw(_("Delivery Date is required for delivery"))
+
 	if not mode_of_payment:
 		frappe.throw(_("Mode of Payment is required for delivery"))
 
-	# Get accounts from Branch
+	if not doc.customer_stock_warehouse:
+		frappe.throw(_("Customer Stock Warehouse must be set before delivery"))
+
+	if not doc.branch:
+		frappe.throw(_("Branch is required for delivery"))
+
+	# -----------------------------
+	# Load Branch & Posting Settings
+	# -----------------------------
 	branch = frappe.get_doc("Branch", doc.branch)
+
+	income_posting_type = (branch.custom_post_income_as or "Journal Entry").strip()
+	si_status = (branch.custom_sales_invoice_status or "Submit").strip()
+	je_status = (branch.custom_journal_entry_status or "Submit").strip()
+
 	if not branch.custom_receivable_account:
 		frappe.throw(_("Receivable Account not defined in Branch"))
-	if not branch.custom_income_account:
+
+	if income_posting_type == "Journal Entry" and not branch.custom_income_account:
 		frappe.throw(_("Income Account not defined in Branch"))
 
-	# Recalculate total_estimated_rent and outstanding_amount
-	total = 0
+	# -----------------------------
+	# Resolve Mode of Payment Account
+	# -----------------------------
+	mop_account = frappe.db.get_value(
+		"Mode of Payment Account",
+		{"parent": mode_of_payment, "company": doc.company},
+		"default_account",
+	)
+
+	if not mop_account:
+		frappe.throw(_("No account found for Mode of Payment: {0}").format(mode_of_payment))
+
+	# -----------------------------
+	# Validate Items + Calculate Rent
+	# -----------------------------
+	total_rent = 0
+
 	for item in doc.reservation_items:
 		if not item.item_code:
 			frappe.throw(_("Item Code is missing in row {0}").format(item.idx))
-		qty = flt(item.qty) or 0
-		if qty <= 0:
-			frappe.throw(_("Quantity must be greater than 0 in row {0}").format(item.idx))
-		rate = flt(item.rate) or 0
-		total += qty * rate
-	doc.total_estimated_rent = total
-	deposit = flt(doc.deposit_amount) or 0
-	paid = flt(doc.paid_amount) or 0
-	doc.outstanding_amount = total - (deposit + paid)
 
-	# Create Stock Entry for Material Issue
+		if flt(item.qty) != 1:
+			frappe.throw(_("Quantity must be 1 in row {0}.").format(item.idx))
+
+		if item.has_serial_no and not item.serial_no:
+			frappe.throw(_("Serial No is required for item {0} in row {1}").format(item.item_code, item.idx))
+
+		if item.has_batch_no and not item.batch_no:
+			frappe.throw(_("Batch No is required for item {0} in row {1}").format(item.item_code, item.idx))
+
+		total_rent += flt(item.rate)
+
+	deposit_paid = flt(doc.deposit_amount)
+	already_paid = flt(doc.paid_amount)
+	doc.total_estimated_rent = total_rent
+	doc.outstanding_amount = total_rent - (deposit_paid + already_paid)
+
+	# -----------------------------
+	# STOCK TRANSFER (Branch -> Customer Stock)
+	# -----------------------------
 	se = frappe.new_doc("Stock Entry")
-	se.stock_entry_type = "Material Issue"
+	se.stock_entry_type = "Material Transfer"
 	se.company = doc.company
 	se.posting_date = delivery_date
 	se.currency = doc.currency
+
 	for item in doc.reservation_items:
-		se.append(
-			"items",
-			{
-				"item_code": item.item_code,
-				"qty": item.qty,
-				"uom": item.uom or "Nos",
-				"s_warehouse": doc.source_warehouse,
-			},
-		)
+		row = {
+			"item_code": item.item_code,
+			"qty": 1,
+			"uom": item.uom or "Nos",
+			"s_warehouse": doc.source_warehouse,
+			"t_warehouse": doc.customer_stock_warehouse,
+			"use_serial_batch_fields": 1,
+		}
+
+		if item.serial_no:
+			row["serial_no"] = item.serial_no
+		if item.batch_no:
+			row["batch_no"] = item.batch_no
+
+		se.append("items", row)
+
+	se.flags.ignore_mandatory = True
 	se.insert()
 	se.submit()
 
-	# Create Journal Entry for the financial transaction
-	if total > 0:
-		je = frappe.new_doc("Journal Entry")
-		je.posting_date = delivery_date
-		je.company = doc.company
-		je.voucher_type = "Journal Entry"
-		je.reference_type = "Suit Reservation"
-		je.reference_name = doc.name
+	for item in doc.reservation_items:
+		item.is_delivered = 1
 
-		# Debit Receivable Account
+	# Track Stock Entry in child table
+	doc.append(
+		"reservation_stock_entries",
+		{
+			"stock_entry": se.name,
+			"entry_type": "Delivery",
+			"posting_date": delivery_date,
+			"remark": "Stock moved to customer stock warehouse",
+		},
+	)
+
+	# -----------------------------
+	# SECURITY PAYMENT
+	# -----------------------------
+	security_amount = flt(doc.security_amount)
+	force_collect_security = bool(doc.force_collect_security_amount)
+
+	if force_collect_security and security_amount <= 0:
+		frappe.throw(_("Security Amount is required when forced."))
+
+	if force_collect_security and security_amount > 0:
+		pe_sec = frappe.new_doc("Payment Entry")
+		pe_sec.payment_type = "Receive"
+		pe_sec.party_type = "Customer"
+		pe_sec.party = doc.customer
+		pe_sec.company = doc.company
+		pe_sec.posting_date = nowdate()
+		pe_sec.currency = doc.currency
+
+		pe_sec.paid_from = branch.custom_receivable_account
+		pe_sec.paid_to = mop_account
+		pe_sec.mode_of_payment = mode_of_payment
+		pe_sec.paid_amount = security_amount
+		pe_sec.received_amount = security_amount
+		pe_sec.flags.ignore_mandatory = True
+
+		pe_sec.insert()
+		pe_sec.submit()
+
+		doc.append(
+			"reservation_payments",
+			{
+				"payment_entry": pe_sec.name,
+				"payment_mode": mode_of_payment,
+				"amount": security_amount,
+				"description": "Security Payment",
+				"type": "Receive",
+			},
+		)
+
+	# -----------------------------
+	# RENT INCOME POSTING
+	# -----------------------------
+	rent_invoice_doc = None
+
+	# Journal Entry Method
+	if income_posting_type == "Journal Entry":
+		je = frappe.new_doc("Journal Entry")
+		je.company = doc.company
+		je.posting_date = delivery_date
+		je.voucher_type = "Journal Entry"
+		je.user_remark = "Suit Reservation"
+		je.cheque_no = doc.name
+
 		je.append(
 			"accounts",
 			{
 				"account": branch.custom_receivable_account,
 				"party_type": "Customer",
 				"party": doc.customer,
-				"debit_in_account_currency": total,
-				"credit_in_account_currency": 0,
+				"debit_in_account_currency": total_rent,
 			},
 		)
 
-		# Credit Income Account
 		je.append(
 			"accounts",
 			{
 				"account": branch.custom_income_account,
-				"debit_in_account_currency": 0,
-				"credit_in_account_currency": total,
+				"credit_in_account_currency": total_rent,
 			},
 		)
 
+		je.flags.ignore_mandatory = True
 		je.insert()
-		je.submit()
 
-		# Create Payment Entry for remaining amount
-		remaining_amount = total - deposit
-		if remaining_amount > 0:
-			pe = frappe.new_doc("Payment Entry")
-			pe.payment_type = "Receive"
-			pe.party_type = "Customer"
-			pe.party = doc.customer
-			pe.paid_amount = remaining_amount
-			pe.received_amount = remaining_amount
-			pe.company = doc.company
-			pe.posting_date = nowdate()
-			pe.currency = doc.currency
-			pe.paid_from = branch.custom_receivable_account
-			pe.paid_to = branch.custom_bank_account
-			pe.paid_from_account_currency = doc.currency
-			pe.paid_to_account_currency = doc.currency
-			pe.mode_of_payment = mode_of_payment
-			pe.reference_no = doc.name
-			pe.reference_date = nowdate()
-			pe.insert()
-			pe.submit()
+		if je_status == "Submit":
+			je.submit()
 
-			doc.append("reservation_payments", {"payment_entry": pe.name})
-			doc.paid_amount = total  # Full amount paid (deposit + remaining)
-		else:
-			doc.paid_amount = deposit  # Only deposit was paid
+		doc.append(
+			"reservation_journal_entry",
+			{
+				"journal_entry": je.name,
+				"date": delivery_date,
+				"purpose": "Rent",
+				"amount": total_rent,
+			},
+		)
 
-		doc.outstanding_amount = 0  # Reset after payment
+	# Sales Invoice Method
+	else:
+		if not branch.custom_rent_invoice_item:
+			frappe.throw(_("Rent Invoice Item must be defined in Branch"))
 
-	# Update reservation status, delivery date, and stock entry
+		si = frappe.new_doc("Sales Invoice")
+		si.customer = doc.customer
+		si.company = doc.company
+		si.posting_date = delivery_date
+		si.due_date = delivery_date
+		si.currency = doc.currency
+		si.set_posting_time = 1
+
+		si.append(
+			"items",
+			{
+				"item_code": branch.custom_rent_invoice_item,
+				"qty": 1,
+				"rate": total_rent,
+			},
+		)
+
+		si.flags.ignore_mandatory = True
+		si.insert()  # draft first
+
+		# Add Deposit Payment as advance (if exists)
+		for pay in doc.reservation_payments:
+			if pay.description == "Deposit Payment" and pay.payment_entry:
+				pe_remarks = frappe.db.get_value("Payment Entry", pay.payment_entry, "remarks") or ""
+				pe_paid_amount = flt(
+					frappe.db.get_value("Payment Entry", pay.payment_entry, "paid_amount") or 0
+				)
+
+				if pe_paid_amount:
+					si.append(
+						"advances",
+						{
+							"reference_type": "Payment Entry",
+							"reference_name": pay.payment_entry,
+							"advance_amount": pe_paid_amount,
+							"allocated_amount": pe_paid_amount,
+							"remarks": pe_remarks,
+							"difference_posting_date": si.posting_date,
+						},
+					)
+
+		si.save()
+		rent_invoice_doc = si
+
+	# -----------------------------
+	# REMAINING RENT PAYMENT
+	# -----------------------------
+	remaining_rent = total_rent - deposit_paid
+
+	if remaining_rent > 0:
+		pe_rent = frappe.new_doc("Payment Entry")
+		pe_rent.payment_type = "Receive"
+		pe_rent.party_type = "Customer"
+		pe_rent.party = doc.customer
+		pe_rent.company = doc.company
+		pe_rent.posting_date = nowdate()
+		pe_rent.currency = doc.currency
+		pe_rent.mode_of_payment = mode_of_payment
+
+		pe_rent.paid_from = branch.custom_receivable_account
+		pe_rent.paid_to = mop_account
+		pe_rent.paid_amount = remaining_rent
+		pe_rent.received_amount = remaining_rent
+		pe_rent.flags.ignore_mandatory = True
+
+		pe_rent.insert()
+		pe_rent.submit()
+
+		doc.append(
+			"reservation_payments",
+			{
+				"payment_entry": pe_rent.name,
+				"payment_mode": mode_of_payment,
+				"amount": remaining_rent,
+				"description": "Remaining Rent Payment",
+				"type": "Receive",
+			},
+		)
+
+		# If we used Sales Invoice, add Remaining Rent as advance too
+		if rent_invoice_doc:
+			pe_remarks = pe_rent.remarks or ""
+			rent_invoice_doc.append(
+				"advances",
+				{
+					"reference_type": "Payment Entry",
+					"reference_name": pe_rent.name,
+					"advance_amount": remaining_rent,
+					"allocated_amount": remaining_rent,
+					"remarks": pe_remarks,
+					"difference_posting_date": rent_invoice_doc.posting_date,
+				},
+			)
+			rent_invoice_doc.save()
+
+		doc.paid_amount = total_rent
+	else:
+		doc.paid_amount = deposit_paid
+
+	doc.outstanding_amount = 0
+
+	# -----------------------------
+	# FINALIZE SALES INVOICE (if used)
+	# -----------------------------
+	if rent_invoice_doc:
+		if si_status == "Submit":
+			rent_invoice_doc.submit()
+
+		doc.append(
+			"reservation_sales_invoice",
+			{
+				"sales_invoice": rent_invoice_doc.name,
+				"date": delivery_date,
+				"purpose": "Rent",
+				"amount": total_rent,
+			},
+		)
+
+	# -----------------------------
+	# FINAL UPDATE
+	# -----------------------------
 	doc.reservation_status = "Delivered"
 	doc.actual_delivery_date = delivery_date
-	doc.stock_entry_delivery = se.name
-	doc.journal_entry = je.name
+
 	doc.save(ignore_permissions=True)
 
-	# Display success message
 	frappe.msgprint(
-		msg=_("Reservation {0} has been successfully delivered on {1}.").format(name, delivery_date),
+		msg=_("Reservation {0} has been successfully delivered.").format(name),
 		title=_("Delivery Successful"),
 		indicator="green",
 	)
