@@ -1,0 +1,189 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:status_code",
+ "creation": "2025-12-11 22:04:13.672749",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "status_code",
+  "status_name",
+  "description",
+  "column_break_ryec",
+  "type",
+  "active",
+  "allow_edit_penalty",
+  "section_break_jjga",
+  "branch",
+  "post_income_as",
+  "column_break_ebmx",
+  "company",
+  "income_account",
+  "income_item",
+  "help_article_tab",
+  "return_rule_help"
+ ],
+ "fields": [
+  {
+   "fieldname": "status_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Status Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Small Text",
+   "label": "Description"
+  },
+  {
+   "fieldname": "column_break_ryec",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Type",
+   "options": "Good\nDamage\nLost",
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_break_jjga",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "branch",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Branch",
+   "options": "Branch",
+   "reqd": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "column_break_ebmx",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:doc.type !=='Good'",
+   "fetch_from": "branch.custom_post_income_as",
+   "fieldname": "post_income_as",
+   "fieldtype": "Data",
+   "label": "Post Income As",
+   "mandatory_depends_on": "eval:doc.type !=='Good'",
+   "read_only": 1
+  },
+  {
+   "default": "1",
+   "fieldname": "active",
+   "fieldtype": "Check",
+   "label": "Active"
+  },
+  {
+   "default": "0",
+   "depends_on": "eval:doc.type !=='Good'",
+   "fieldname": "allow_edit_penalty",
+   "fieldtype": "Check",
+   "label": "Allow Edit Penalty"
+  },
+  {
+   "fetch_from": "branch.custom_company",
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "depends_on": "eval:doc.post_income_as=='Journal Entry' && doc.type !=='Good'",
+   "fieldname": "income_account",
+   "fieldtype": "Link",
+   "label": "Income Account",
+   "link_filters": "[[\"Account\",\"root_type\",\"=\",\"Income\"],[\"Account\",\"is_group\",\"=\",0]]",
+   "mandatory_depends_on": "eval:doc.post_income_as=='Journal Entry' && doc.type !=='Good'",
+   "options": "Account"
+  },
+  {
+   "depends_on": "eval:doc.post_income_as=='Sales Invoice' && doc.type !=='Good'",
+   "fieldname": "income_item",
+   "fieldtype": "Link",
+   "label": "Income Item",
+   "link_filters": "[[\"Item\",\"is_stock_item\",\"=\",0],[\"Item\",\"is_sales_item\",\"=\",1],[\"Item\",\"is_fixed_asset\",\"=\",0],[\"Item\",\"disabled\",\"=\",0]]",
+   "mandatory_depends_on": "eval:doc.post_income_as=='Sales Invoice' && doc.type !=='Good'",
+   "options": "Item"
+  },
+  {
+   "fieldname": "status_code",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Status Code",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "help_article_tab",
+   "fieldtype": "Tab Break",
+   "label": "Help Article"
+  },
+  {
+   "fieldname": "return_rule_help",
+   "fieldtype": "HTML",
+   "label": "Return Rule Help"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-12-11 23:01:33.243234",
+ "modified_by": "Administrator",
+ "module": "Suit Rental",
+ "name": "Suit Return Status",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Suit Rental User",
+   "share": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Suit Rental Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "status_name"
+}
