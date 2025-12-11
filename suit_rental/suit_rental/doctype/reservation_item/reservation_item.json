@@ -21,14 +21,14 @@
   "column_break_pied",
   "has_batch_no",
   "batch_no",
-  "section_break_duvq",
-  "image_view",
   "return_status_section",
   "return_status",
   "is_returned",
   "column_break_zskh",
   "penalty_amount",
-  "return_notes"
+  "return_notes",
+  "section_break_duvq",
+  "image_view"
  ],
  "fields": [
   {
@@ -205,7 +205,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2025-12-11 22:31:28.641868",
+ "modified": "2025-12-11 23:14:29.175778",
  "modified_by": "Administrator",
  "module": "Suit Rental",
  "name": "Reservation Item",
