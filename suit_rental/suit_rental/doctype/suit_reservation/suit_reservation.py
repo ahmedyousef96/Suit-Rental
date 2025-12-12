@@ -23,8 +23,8 @@ class SuitReservation(Document):
 
 			# Load Branch
 			branch = frappe.get_doc("Branch", self.branch)
-			if not branch.custom_receivable_account:
-				frappe.throw(_("Receivable Account not defined in Branch"))
+			#if not branch.custom_receivable_account:
+			#	frappe.throw(_("Receivable Account not defined in Branch"))
 
 			# Resolve Mode of Payment Account
 			mop_account = frappe.db.get_value(
@@ -44,7 +44,7 @@ class SuitReservation(Document):
 			pe.posting_date = nowdate()
 			pe.currency = self.currency
 
-			pe.paid_from = branch.custom_receivable_account
+			#pe.paid_from = branch.custom_receivable_account
 			pe.paid_to = mop_account
 			pe.paid_from_account_currency = self.currency
 			pe.paid_to_account_currency = self.currency
