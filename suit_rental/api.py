@@ -158,12 +158,6 @@ def deliver_reservation(name, delivery_date, mode_of_payment):
 	si_status = (branch.custom_sales_invoice_status or "Submit").strip()
 	je_status = (branch.custom_journal_entry_status or "Submit").strip()
 
-	if not branch.custom_receivable_account:
-		frappe.throw(_("Receivable Account not defined in Branch"))
-
-	if income_posting_type == "Journal Entry" and not branch.custom_income_account:
-		frappe.throw(_("Income Account not defined in Branch"))
-
 	# -----------------------------
 	# Resolve Mode of Payment Account
 	# -----------------------------
@@ -262,8 +256,6 @@ def deliver_reservation(name, delivery_date, mode_of_payment):
 		pe_sec.company = doc.company
 		pe_sec.posting_date = nowdate()
 		pe_sec.currency = doc.currency
-
-		pe_sec.paid_from = branch.custom_receivable_account
 		pe_sec.paid_to = mop_account
 		pe_sec.mode_of_payment = mode_of_payment
 		pe_sec.paid_amount = security_amount
@@ -395,8 +387,6 @@ def deliver_reservation(name, delivery_date, mode_of_payment):
 		pe_rent.posting_date = nowdate()
 		pe_rent.currency = doc.currency
 		pe_rent.mode_of_payment = mode_of_payment
-
-		pe_rent.paid_from = branch.custom_receivable_account
 		pe_rent.paid_to = mop_account
 		pe_rent.paid_amount = remaining_rent
 		pe_rent.received_amount = remaining_rent
