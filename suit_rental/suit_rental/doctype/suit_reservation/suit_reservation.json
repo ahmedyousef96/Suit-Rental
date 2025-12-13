@@ -34,8 +34,8 @@
   "section_break_lnhh",
   "reservation_items",
   "section_break_xusu",
-  "security_amount",
   "force_collect_security_amount",
+  "security_amount",
   "column_break_empp",
   "total_estimated_rent",
   "paid_amount",
@@ -53,19 +53,14 @@
   "reservation_payments",
   "delivery_details_tab",
   "actual_delivery_date",
-  "stock_entry_delivery",
   "column_break_hskc",
-  "journal_entry",
+  "actual_return_date",
   "section_break_hncg",
   "reservation_sales_invoice",
   "journal_entries_section",
   "reservation_journal_entry",
   "stock_entries_section",
-  "reservation_stock_entries",
-  "return_details_tab",
-  "actual_return_date",
-  "column_break_mmxk",
-  "stock_entry_return"
+  "reservation_stock_entries"
  ],
  "fields": [
   {
@@ -175,9 +170,9 @@
    "read_only": 1
   },
   {
-   "default": "Today",
+   "default": "Now",
    "fieldname": "reservation_date",
-   "fieldtype": "Date",
+   "fieldtype": "Datetime",
    "label": "Reservation Date",
    "reqd": 1
   },
@@ -239,34 +234,16 @@
   {
    "allow_on_submit": 1,
    "fieldname": "actual_delivery_date",
-   "fieldtype": "Date",
+   "fieldtype": "Datetime",
    "label": "Delivery Date",
    "read_only": 1
   },
   {
    "allow_on_submit": 1,
    "fieldname": "actual_return_date",
-   "fieldtype": "Date",
+   "fieldtype": "Datetime",
    "label": "Return Date",
    "read_only": 1
-  },
-  {
-   "allow_on_submit": 1,
-   "fieldname": "stock_entry_delivery",
-   "fieldtype": "Link",
-   "label": "Stock Entry Delivery",
-   "options": "Stock Entry",
-   "read_only": 1,
-   "search_index": 1
-  },
-  {
-   "allow_on_submit": 1,
-   "fieldname": "stock_entry_return",
-   "fieldtype": "Link",
-   "label": "Stock Entry Return",
-   "options": "Stock Entry",
-   "read_only": 1,
-   "search_index": 1
   },
   {
    "allow_on_submit": 1,
@@ -342,21 +319,12 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "return_details_tab",
-   "fieldtype": "Tab Break",
-   "label": "Return Details"
-  },
-  {
    "fieldname": "delivery_details_tab",
    "fieldtype": "Tab Break",
-   "label": "Delivery Details"
+   "label": "Delivery and Return Details"
   },
   {
    "fieldname": "column_break_hskc",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "column_break_mmxk",
    "fieldtype": "Column Break"
   },
   {
@@ -382,14 +350,7 @@
   },
   {
    "allow_on_submit": 1,
-   "fieldname": "journal_entry",
-   "fieldtype": "Link",
-   "label": "Journal Entry",
-   "options": "Journal Entry",
-   "read_only": 1
-  },
-  {
-   "allow_on_submit": 1,
+   "depends_on": "force_collect_security_amount",
    "fieldname": "security_amount",
    "fieldtype": "Currency",
    "label": "Security Amount",
@@ -477,7 +438,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-12-09 23:55:39.799790",
+ "modified": "2025-12-13 23:33:54.712767",
  "modified_by": "Administrator",
  "module": "Suit Rental",
  "name": "Suit Reservation",

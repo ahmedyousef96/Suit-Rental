@@ -55,8 +55,8 @@ frappe.ui.form.on("Suit Reservation", {
 						{
 							label: __("Delivery Date"),
 							fieldname: "delivery_date",
-							fieldtype: "Date",
-							default: frappe.datetime.now_date(),
+							fieldtype: "Datetime",
+							default: frappe.datetime.now_datetime(),
 							reqd: 1,
 						},
 						{
@@ -90,43 +90,6 @@ frappe.ui.form.on("Suit Reservation", {
 				dialog.show();
 			});
 		}
-
-		// Add Return button if docstatus is 1 (Submitted) and reservation_status is 'Delivered'
-		if (frm.doc.docstatus === 1 && frm.doc.reservation_status === "Delivered") {
-			frm.add_custom_button(__("Return"), function () {
-				let dialog = new frappe.ui.Dialog({
-					title: __("Return Reservation"),
-					fields: [
-						{
-							label: __("Return Date"),
-							fieldname: "return_date",
-							fieldtype: "Date",
-							default: frappe.datetime.now_date(),
-							reqd: 1,
-						},
-					],
-					primary_action_label: __("Return"),
-					primary_action(values) {
-						frappe.call({
-							method: "suit_rental.api.return_reservation",
-							args: {
-								name: frm.doc.name,
-								return_date: values.return_date,
-							},
-							callback: function (r) {
-								if (r.message) {
-									frm.reload_doc();
-									frappe.msgprint(__("Reservation returned successfully"));
-								}
-							},
-						});
-						dialog.hide();
-					},
-				});
-				dialog.show();
-			});
-		}
-
 		// Auto-set sales_person from session user
 		if (!frm.doc.sales_person) {
 			frm.set_value("sales_person", frappe.session.user);
@@ -419,7 +382,8 @@ frappe.ui.form.on("Suit Reservation", {
 	},
 });
 
-//
+// Set Batch Auto if linked with serial no
+
 frappe.ui.form.on("Reservation Item", {
 	serial_no(frm, cdt, cdn) {
 		let row = locals[cdt][cdn];
@@ -440,3 +404,138 @@ frappe.ui.form.on("Reservation Item", {
 		}
 	},
 });
+
+// filter return_status field 
+frappe.ui.form.on("Suit Reservation", {
+	refresh(frm) {
+		if (!frm.fields_dict.reservation_items?.grid) return;
+
+		frm.fields_dict.reservation_items.grid
+			.get_field("return_status")
+			.get_query = function (doc, cdt, cdn) {
+				return {
+					filters: {
+						active: 1,
+						branch: doc.branch,
+					},
+				};
+			};
+	},
+});
+
+
+// Set Penalty amount auto
+frappe.ui.form.on("Reservation Item", {
+	return_status(frm, cdt, cdn) {
+		const row = locals[cdt][cdn];
+		if (!row.return_status || !row.item_code) return;
+
+		// GOOD no penalty
+		if (row.return_type === "Good") {
+			frappe.model.set_value(cdt, cdn, "penalty_amount", 0);
+			return;
+		}
+
+		// DAMAGE LOST  get default penalty from Item
+		const penalty_field =
+			row.return_type === "Lost"
+				? "custom_lost_penalty_amount"
+				: "custom_damage_penalty_amount";
+
+		frappe.db
+			.get_value("Item", row.item_code, penalty_field)
+			.then((r) => {
+				const amount = flt(r.message?.[penalty_field]) || 0;
+				frappe.model.set_value(cdt, cdn, "penalty_amount", amount);
+			});
+	},
+});
+
+// Return API
+ 
+frappe.ui.form.on("Suit Reservation", {
+	refresh(frm) {
+		if (
+			frm.doc.docstatus === 1 &&
+			frm.doc.reservation_status === "Delivered"
+		) {
+			frm.add_custom_button(__("Return"), () => {
+				validate_and_open_return_dialog(frm);
+			});
+		}
+	},
+});
+
+function validate_and_open_return_dialog(frm) {
+	let total_penalty = 0;
+	let missing_status = false;
+
+	(frm.doc.reservation_items || []).forEach(row => {
+		if (!row.return_status) {
+			missing_status = true;
+		}
+		total_penalty += flt(row.penalty_amount);
+	});
+
+	if (missing_status) {
+		frappe.msgprint({
+			title: __("Missing Return Status"),
+			message: __("All items must have a Return Status before returning."),
+			indicator: "red",
+		});
+		return;
+	}
+
+	open_return_dialog(frm, total_penalty);
+}
+
+function open_return_dialog(frm, total_penalty) {
+	const dialog = new frappe.ui.Dialog({
+		title: __("Confirm Return"),
+		fields: [
+			{
+				fieldname: "actual_return_datetime",
+				fieldtype: "Datetime",
+				label: __("Return Date"),
+				reqd: 1,
+				default: frappe.datetime.now_datetime(),
+			},
+			{
+				fieldname: "total_penalty",
+				fieldtype: "Currency",
+				label: __("Total Penalty Amount"),
+				read_only: 1,
+				default: total_penalty,
+			},
+		],
+
+		primary_action_label: __("Confirm Return"),
+		primary_action(values) {
+			dialog.hide();
+
+			frappe.call({
+				method: "suit_rental.api.return_reservation",
+				args: {
+					name: frm.doc.name,
+					actual_return_datetime: values.actual_return_datetime,
+				},
+				freeze: true,
+				freeze_message: __("Processing return..."),
+				callback(r) {
+					if (!r.exc) {
+						frm.reload_doc();
+						frappe.msgprint({
+							title: __("Return Completed"),
+							message: __("Reservation returned successfully."),
+							indicator: "green",
+						});
+					}
+				},
+			});
+		},
+	});
+
+	dialog.show();
+}
+
+
