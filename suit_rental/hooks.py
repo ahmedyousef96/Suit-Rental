@@ -11,10 +11,15 @@ fixtures = [
 	{"doctype": "Client Script", "filters": [["module", "=", "Suit Rental"]]},
 	{"doctype": "Server Script", "filters": [["module", "=", "Suit Rental"]]},
 	{"doctype": "Report", "filters": [["module", "=", "Suit Rental"]]},
-	{"doctype": "Custom DocPerm", "filters": [["role", "in", ["Suit Rental Manager", "Suit Rental User"]]]},
 ]
 
-after_sync = "suit_rental.install.after_sync"
+after_install = "suit_rental.install.after_install"
+
+before_uninstall = "suit_rental.install.before_uninstall"
+
+#after_sync = "suit_rental.install.after_sync"
+
+
 
 
 # Apps
