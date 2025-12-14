@@ -11,6 +11,7 @@
   "description",
   "column_break_ryec",
   "type",
+  "damage_warehouse",
   "active",
   "allow_edit_penalty",
   "section_break_jjga",
@@ -133,12 +134,21 @@
    "fieldname": "return_rule_help",
    "fieldtype": "HTML",
    "label": "Return Rule Help"
+  },
+  {
+   "depends_on": "eval:doc.type == 'Damage'",
+   "fieldname": "damage_warehouse",
+   "fieldtype": "Link",
+   "label": "Warehouse",
+   "mandatory_depends_on": "eval:doc.type == 'Damage'",
+   "options": "Warehouse",
+   "search_index": 1
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-12-11 23:01:33.243234",
+ "modified": "2025-12-13 04:16:10.140848",
  "modified_by": "Administrator",
  "module": "Suit Rental",
  "name": "Suit Return Status",

@@ -14,7 +14,6 @@
   "rate",
   "image",
   "check_availability",
-  "is_delivered",
   "serial_nos_and_batches_section",
   "has_serial_no",
   "serial_no",
@@ -23,12 +22,16 @@
   "batch_no",
   "return_status_section",
   "return_status",
-  "is_returned",
+  "return_type",
+  "allow_edit_penalty",
   "column_break_zskh",
   "penalty_amount",
   "return_notes",
   "section_break_duvq",
-  "image_view"
+  "image_view",
+  "column_break_rapp",
+  "is_delivered",
+  "is_returned"
  ],
  "fields": [
   {
@@ -156,7 +159,7 @@
    "default": "0",
    "fieldname": "is_delivered",
    "fieldtype": "Check",
-   "label": "Is Delivered",
+   "label": "Delivery Cycle Passed",
    "read_only": 1
   },
   {
@@ -166,18 +169,20 @@
   },
   {
    "allow_on_submit": 1,
+   "depends_on": "is_delivered",
    "fieldname": "return_status",
    "fieldtype": "Link",
    "label": "Return Status",
    "options": "Suit Return Status",
-   "read_only": 1
+   "read_only_depends_on": "is_returned"
   },
   {
    "allow_on_submit": 1,
+   "depends_on": "is_delivered",
    "fieldname": "return_notes",
    "fieldtype": "Small Text",
    "label": "Return Notes",
-   "read_only": 1
+   "read_only_depends_on": "is_returned"
   },
   {
    "fieldname": "column_break_zskh",
@@ -185,19 +190,44 @@
   },
   {
    "allow_on_submit": 1,
+   "default": "0",
+   "depends_on": "eval:doc.return_type !== 'Good' && doc.return_status && doc.is_delivered",
+   "description": "Fetched from Doctype (Item) , Can edit only if \"Allow Edit Penalty\" is Checked at Doctype (Suit Return Status).\n",
    "fieldname": "penalty_amount",
    "fieldtype": "Currency",
    "label": "Penalty Amount",
    "non_negative": 1,
    "precision": "2",
+   "read_only_depends_on": "eval:!doc.allow_edit_penalty || doc.is_returned"
+  },
+  {
+   "allow_on_submit": 1,
+   "fetch_from": "return_status.type",
+   "fieldname": "return_type",
+   "fieldtype": "Data",
+   "label": "Return Type",
    "read_only": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "default": "0",
+   "depends_on": "eval:doc.return_type !== 'Good' && doc.return_type != null && doc.is_delivered",
+   "fetch_from": "return_status.allow_edit_penalty",
+   "fieldname": "allow_edit_penalty",
+   "fieldtype": "Check",
+   "label": "Allow Edit Penalty",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_rapp",
+   "fieldtype": "Column Break"
   },
   {
    "allow_on_submit": 1,
    "default": "0",
    "fieldname": "is_returned",
    "fieldtype": "Check",
-   "label": "Is Returned",
+   "label": "Return Cycle Passed",
    "read_only": 1
   }
  ],
@@ -205,7 +235,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2025-12-11 23:14:29.175778",
+ "modified": "2025-12-14 00:25:51.771663",
  "modified_by": "Administrator",
  "module": "Suit Rental",
  "name": "Reservation Item",
