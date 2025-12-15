@@ -17,7 +17,7 @@ after_install = "suit_rental.install.after_install"
 
 before_uninstall = "suit_rental.install.before_uninstall"
 
-#after_sync = "suit_rental.install.after_sync"
+after_migrate = "suit_rental.install.after_migrate"
 
 
 

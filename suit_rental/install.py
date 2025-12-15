@@ -6,11 +6,11 @@ from suit_rental.setup.permissions import setup_suit_rental_permissions
 
 def after_install():
 	create_suit_rental_roles()
-	#setup_suit_rental_permissions()
+	setup_suit_rental_permissions()
 
 
-#def after_sync():
-#	setup_suit_rental_permissions()
+def after_migrate():
+	setup_suit_rental_permissions()
 
 
 def before_uninstall():
