@@ -89,7 +89,7 @@ jobs:
           mariadb --host 127.0.0.1 --port 3306 -u root -proot -e "SET GLOBAL collation_server = 'utf8mb4_unicode_ci'"
 
       - name: Install Apps (ERPNext v15)
-        working-directory: /home/runner/frappe-bench   # Fixed: use full path, no ~
+        working-directory: /home/runner/frappe-bench
         run: |
           bench get-app erpnext --branch version-15
           bench get-app suit_rental $GITHUB_WORKSPACE
@@ -101,8 +101,13 @@ jobs:
         env:
           CI: 'Yes'
 
+      - name: Prepare for Tests (Create Missing Warehouse Type)
+        working-directory: /home/runner/frappe-bench
+        run: |
+          bench --site test_site execute frappe.client.insert --kwargs "{'doctype': 'Warehouse Type', 'name': 'Transit'}"
+
       - name: Run Tests
-        working-directory: /home/runner/frappe-bench   # Also use full path here for consistency
+        working-directory: /home/runner/frappe-bench
         run: |
           bench --site test_site set-config allow_tests true
           bench --site test_site run-tests --app suit_rental
