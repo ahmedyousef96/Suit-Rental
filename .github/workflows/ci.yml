@@ -104,7 +104,16 @@ jobs:
       - name: Prepare for Tests (Create Missing Warehouse Type - Transit)
         working-directory: /home/runner/frappe-bench
         run: |
-          bench --site test_site execute frappe.get_doc --kwargs "{\"doctype\": \"Warehouse Type\", \"warehouse_type_name\": \"Transit\"}" --run-method insert
+          bench --site test_site console <<'EOF'
+          import frappe
+          if not frappe.db.exists("Warehouse Type", "Transit"):
+              doc = frappe.get_doc({
+                  "doctype": "Warehouse Type",
+                  "warehouse_type_name": "Transit"
+              })
+              doc.insert(ignore_permissions=True, ignore_mandatory=True)
+              frappe.db.commit()
+          EOF
 
       - name: Run Tests
         working-directory: /home/runner/frappe-bench
