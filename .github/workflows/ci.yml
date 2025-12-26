@@ -41,7 +41,7 @@ jobs:
       - name: Find tests
         run: |
           echo "Finding tests"
-          grep -rn "def test" > /dev/null || echo "No tests found, skipping"
+          grep -rn "def test" > /dev/null || echo "No tests found"
 
       - name: Setup Python
         uses: actions/setup-python@v4
@@ -51,7 +51,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 20
           check-latest: true
 
       - name: Cache pip
@@ -77,19 +77,17 @@ jobs:
             ${{ runner.os }}-yarn-
 
       - name: Install MariaDB Client
-        run: |
-          sudo apt update
-          sudo apt-get install -y mariadb-client
+        run: sudo apt-get install -y mariadb-client
 
-      - name: Setup Bench (Frappe v15)
+      - name: Setup
         run: |
           pip install frappe-bench
           bench init --skip-redis-config-generation --skip-assets --python "$(which python)" --frappe-branch version-15 ~/frappe-bench
           mariadb --host 127.0.0.1 --port 3306 -u root -proot -e "SET GLOBAL character_set_server = 'utf8mb4'"
           mariadb --host 127.0.0.1 --port 3306 -u root -proot -e "SET GLOBAL collation_server = 'utf8mb4_unicode_ci'"
 
-      - name: Install Apps (ERPNext v15)
-        working-directory: ~/frappe-bench
+      - name: Install
+        working-directory: /home/runner/frappe-bench
         run: |
           bench get-app erpnext --branch version-15
           bench get-app suit_rental $GITHUB_WORKSPACE
@@ -97,15 +95,16 @@ jobs:
           bench new-site --db-root-password root --admin-password admin test_site
           bench --site test_site install-app erpnext
           bench --site test_site install-app suit_rental
-          bench build --app erpnext --app suit_rental
+          bench build
         env:
           CI: 'Yes'
 
-      - name: Run Tests
-        working-directory: ~/frappe-bench
-        run: |
-          bench --site test_site set-config allow_tests true
-          bench --site test_site run-tests --app suit_rental
-        env:
-          TYPE: server
-          
+      # Tests are intentionally disabled as per your request
+      # If you add tests later, uncomment the block below:
+      # - name: Run Tests
+      #   working-directory: /home/runner/frappe-bench
+      #   run: |
+      #     bench --site test_site set-config allow_tests true
+      #     bench --site test_site run-tests --app suit_rental
+      #   env:
+      #     TYPE: server
