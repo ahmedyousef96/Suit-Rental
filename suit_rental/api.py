@@ -294,6 +294,9 @@ def deliver_reservation(name, delivery_date, mode_of_payment):
         pe_sec.mode_of_payment = mode_of_payment
         pe_sec.paid_amount = security_amount
         pe_sec.received_amount = security_amount
+        pe_sec.reference_no = doc.name
+        pe_sec.reference_date = delivery_date_only
+        
         pe_sec.flags.ignore_mandatory = True
 
         pe_sec.insert()
@@ -432,6 +435,9 @@ def deliver_reservation(name, delivery_date, mode_of_payment):
         pe_rent.paid_to = mop_account
         pe_rent.paid_amount = remaining_rent
         pe_rent.received_amount = remaining_rent
+        pe_rent.reference_no = doc.name
+        pe_rent.reference_date = delivery_date_only
+        
         pe_rent.flags.ignore_mandatory = True
 
         pe_rent.insert()
