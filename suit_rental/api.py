@@ -271,6 +271,7 @@ def deliver_reservation(name, delivery_date, mode_of_payment):
             "remark": "Stock moved to customer stock warehouse",
         },
     )
+    
 
     # -----------------------------
     # SECURITY PAYMENT
