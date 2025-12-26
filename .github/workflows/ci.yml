@@ -101,10 +101,10 @@ jobs:
         env:
           CI: 'Yes'
 
-      - name: Prepare for Tests (Create Missing Warehouse Type)
+      - name: Prepare for Tests (Create Missing Warehouse Type - Transit)
         working-directory: /home/runner/frappe-bench
         run: |
-          bench --site test_site execute frappe.client.insert --kwargs "{'doctype': 'Warehouse Type', 'name': 'Transit'}"
+          bench --site test_site execute frappe.get_doc --kwargs "{\"doctype\": \"Warehouse Type\", \"warehouse_type_name\": \"Transit\"}" --run-method insert
 
       - name: Run Tests
         working-directory: /home/runner/frappe-bench
