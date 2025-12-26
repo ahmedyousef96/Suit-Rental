@@ -123,7 +123,6 @@ def check_availability(
         "last_10_reservations": last_10_reservations,
     }
 
-
 # Deliver Items
 @frappe.whitelist()
 def deliver_reservation(name, delivery_date, mode_of_payment):
